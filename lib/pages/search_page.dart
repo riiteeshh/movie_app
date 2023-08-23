@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:movie_app/api/movie_list.dart';
 import 'package:movie_app/components/error_icon.dart';
 import 'package:movie_app/components/loading_page.dart';
@@ -70,7 +71,26 @@ class _SearchPageState extends State<SearchPage> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.none ||
                 snapshot.hasError) {
-              return const ErrorIcon();
+              return AlertDialog(
+                title: const ErrorIcon(),
+                elevation: 0,
+                actions: [
+                  ElevatedButton(
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      onPressed: () {
+                        setState(() {});
+                      },
+                      child: const Text('Try Again')),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green),
+                      onPressed: () {
+                        SystemNavigator.pop();
+                      },
+                      child: const Text('Exit')),
+                ],
+              );
             } else if (snapshot.hasData) {
               dynamic _moviesdatas = snapshot.data!;
               if (_searchKey.text != '') {

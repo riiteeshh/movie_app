@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:movie_app/api/movie_list.dart';
 import 'package:movie_app/components/error_icon.dart';
 import 'package:movie_app/components/loading_page.dart';
@@ -80,7 +83,26 @@ class _HomePageState extends State<HomePage> {
               if (snapshot.connectionState == ConnectionState.none ||
                   snapshot.hasError) {
                 // to check if connection is not present or data has error
-                return const ErrorIcon();
+                return AlertDialog(
+                  title: const ErrorIcon(),
+                  elevation: 0,
+                  actions: [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red),
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        child: const Text('Try Again')),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green),
+                        onPressed: () {
+                          SystemNavigator.pop();
+                        },
+                        child: const Text('Exit')),
+                  ],
+                );
               } else if (snapshot.hasData) {
                 dynamic _moviesdatas = snapshot.data!;
 
