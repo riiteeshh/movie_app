@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:movie_app/components/loading_page.dart';
 import 'package:movie_app/pages/overview_page.dart';
 
 class MovieCard extends StatefulWidget {
@@ -18,7 +19,7 @@ class _MovieCardState extends State<MovieCard> {
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 0.45,
+            childAspectRatio: 0.56,
             crossAxisSpacing: 12,
             mainAxisSpacing: 15.0),
         itemCount: widget.finalData.length,
@@ -37,18 +38,22 @@ class _MovieCardState extends State<MovieCard> {
                   borderRadius: BorderRadius.circular(15), color: Colors.white),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Card(
                     color: Colors.transparent,
                     elevation: 5,
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.37,
+                      height: MediaQuery.of(context).size.height * 0.3,
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(15)),
                         child: Image.network(
                           'https://image.tmdb.org/t/p/w185${widget.finalData[index]['poster_path']}',
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const LoadingPage(); // shows loading gif if any type of error arises while loading image
+                          },
                         ),
                       ),
                     ),
@@ -61,7 +66,7 @@ class _MovieCardState extends State<MovieCard> {
                       widget.finalData[index]['original_title'],
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 15),
+                          fontWeight: FontWeight.bold, fontSize: 13),
                     ),
                   ),
                   SizedBox(
@@ -75,7 +80,7 @@ class _MovieCardState extends State<MovieCard> {
                         const Icon(
                           Icons.star,
                           color: Colors.amber,
-                          size: 16,
+                          size: 13,
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.01,
@@ -85,7 +90,7 @@ class _MovieCardState extends State<MovieCard> {
                           style: const TextStyle(
                               color: Colors.grey,
                               fontStyle: FontStyle.normal,
-                              fontSize: 15),
+                              fontSize: 13),
                         )
                       ],
                     ),

@@ -61,19 +61,34 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: FutureBuilder<ResponseModel>(
-          future: getMovieData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.none ||
-                snapshot.hasError) {
-              return const ErrorIcon();
-            } else if (snapshot.hasData) {
-              dynamic _moviesdatas = snapshot.data!;
+      body: RefreshIndicator(
+        color: Colors.amber,
+        onRefresh: () async {
+          await Future.delayed(const Duration(
+              seconds: 1)); //to show the refresh indicator for a while
+          // ignore: use_build_context_synchronously
+          Navigator.popUntil(
+              context,
+              (route) => route
+                  .isFirst); // to remove all the pages in the stack till the last
+          // ignore: use_build_context_synchronously
+          Navigator.pushReplacementNamed(context, RouteManager.mainLayoutPage);
+        },
+        child: FutureBuilder<ResponseModel>(
+            future: getMovieData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.none ||
+                  snapshot.hasError) {
+                // to check if connection is not present or data has error
+                return const ErrorIcon();
+              } else if (snapshot.hasData) {
+                dynamic _moviesdatas = snapshot.data!;
 
-              return MovieCard(finalData: _moviesdatas.data);
-            }
-            return const LoadingPage();
-          }),
+                return MovieCard(finalData: _moviesdatas.data);
+              }
+              return const LoadingPage();
+            }),
+      ),
     );
   }
 }

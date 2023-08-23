@@ -35,13 +35,24 @@ class _SearchPageState extends State<SearchPage> {
             Navigator.pop(context);
           },
         ),
-        title: TextFormField(
-          autofocus: true,
-          controller: _searchKey,
-          textInputAction: TextInputAction.search,
-          onFieldSubmitted: (value) {
-            setState(() {});
-          },
+        title: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+          ),
+          margin: const EdgeInsets.only(top: 15, bottom: 15),
+          child: TextFormField(
+            cursorColor: Colors.amber,
+            style: const TextStyle(fontSize: 14),
+            autofocus: true,
+            decoration: const InputDecoration(
+                hintText: '#The Godfather', border: InputBorder.none),
+            controller: _searchKey,
+            textInputAction: TextInputAction.search,
+            onFieldSubmitted: (value) {
+              setState(() {}); //to refresh page to get the search results.
+            },
+          ),
         ),
         actions: [
           TextButton(

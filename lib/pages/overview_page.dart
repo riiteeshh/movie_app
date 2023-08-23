@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/components/loading_page.dart';
 import 'package:movie_app/components/type.dart';
 
 // ignore: must_be_immutable
@@ -38,6 +39,9 @@ class _OverViewPageState extends State<OverViewPage> {
                 child: Image.network(
                   'https://image.tmdb.org/t/p/w185${widget.moviedata['poster_path']}',
                   fit: BoxFit.fill,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const LoadingPage();
+                  },
                 ),
               ),
             ),
@@ -54,7 +58,7 @@ class _OverViewPageState extends State<OverViewPage> {
                     widget.moviedata['original_title'],
                     maxLines: 5,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 25),
+                        fontWeight: FontWeight.bold, fontSize: 23),
                   ),
                 ),
                 Container(
@@ -62,7 +66,7 @@ class _OverViewPageState extends State<OverViewPage> {
                     child: IconButton(
                       icon: Icon(
                         Icons.bookmark_rounded,
-                        size: 35,
+                        size: 32,
                         color: Colors.grey.withOpacity(0.8),
                       ),
                       onPressed: () {},
