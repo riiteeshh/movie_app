@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movie_app/model/response_model.dart';
 
-Future<dynamic?> getMovieList() async {
+Future<ResponseModel> getMovieList() async {
   const String apiUrl =
       'https://api.themoviedb.org/3/movie/top_rated?api_key=db0dcf6a517e0074f03f43ddc49031b4';
 
