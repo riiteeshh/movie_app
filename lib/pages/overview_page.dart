@@ -40,6 +40,7 @@ class _OverViewPageState extends State<OverViewPage> {
                   'https://image.tmdb.org/t/p/w185${widget.moviedata['poster_path']}',
                   fit: BoxFit.fill,
                   errorBuilder: (context, error, stackTrace) {
+                    // for error handling if the image doesn't load
                     return const LoadingPage();
                   },
                 ),
